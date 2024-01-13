@@ -1,0 +1,37 @@
+name: build-and-deploy
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ap-northeast-1
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: JvApi
+      - name: Install dependencies
+        run: npm ci
+      - name: Copy cdk.context.json
+        run: |
+          aws s3 cp ${{ secrets.CDK_CONTEXT_URI }} cdk.context.json
+      - name: Test
+        run: npm run test
+      - name: Deploy
+        if: startsWith(github.ref, 'refs/heads/main')
+        run: npm run deploy

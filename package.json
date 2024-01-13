@@ -10,7 +10,7 @@
     "test": "jest",
     "cdk": "cdk",
     "synth": "cdk synth",
-    "deploy": "cdk deploy",
+    "deploy": "cdk deploy --require-approval never",
     "server": "ts-node server.ts"
   },
   "devDependencies": {
