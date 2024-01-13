@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
@@ -32,6 +34,11 @@ jobs:
           aws s3 cp ${{ secrets.CDK_CONTEXT_URI }} cdk.context.json
       - name: Test
         run: npm run test
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Deploy
         if: startsWith(github.ref, 'refs/heads/main')
         run: npm run deploy
