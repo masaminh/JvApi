@@ -14,7 +14,7 @@ describe('app', () => {
 
   it('raceids: today', async () => {
     jest.spyOn(DateTime, 'now')
-      .mockReturnValue(DateTime.fromISO('20240101'));
+      .mockReturnValue(DateTime.fromISO('20240101') as DateTime<true>);
     const getRaceIdsMock = jest.spyOn(getRaceIds, 'default')
       .mockResolvedValue({ date: '2024-01-01', raceids: ['ID1', 'ID2'] });
     const response = await request(app).get('/raceids');
