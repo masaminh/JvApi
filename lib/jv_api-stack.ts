@@ -42,5 +42,11 @@ export class JvApiStack extends Stack {
       parameterName: `/${props.stage}/JvApi/Url`,
       stringValue: url.url,
     });
+
+    // eslint-disable-next-line no-new
+    new StringParameter(this, 'FunctionArnParameter', {
+      parameterName: `/${props.stage}/JvApi/FunctionArn`,
+      stringValue: apiFunction.functionArn,
+    });
   }
 }
