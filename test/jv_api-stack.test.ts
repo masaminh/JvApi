@@ -21,11 +21,15 @@ describe('JvApiStack', () => {
   });
 
   it('Parameter FunctionARN', () => {
-    template.hasResource('AWS::SSM::Parameter', {
-      Properties: {
-        Name: `/${context.stage}/JvApi/FunctionArn`,
-        Type: 'String',
-      },
+    template.hasResourceProperties('AWS::SSM::Parameter', {
+      Name: `/${context.stage}/JvApi/FunctionArn`,
+      Type: 'String',
+    });
+  });
+
+  it('Url AuthType', () => {
+    template.hasResourceProperties('AWS::Lambda::Url', {
+      AuthType: 'NONE',
     });
   });
 });
