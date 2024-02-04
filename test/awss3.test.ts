@@ -1,7 +1,7 @@
 import { Readable } from 'node:stream';
 import { mockClient } from 'aws-sdk-client-mock';
 import { GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
-import { sdkStreamMixin } from '@aws-sdk/util-stream-node';
+import { sdkStreamMixin } from '@smithy/util-stream';
 import 'aws-sdk-client-mock-jest';
 import AwsS3 from '../src/awss3';
 
