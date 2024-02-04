@@ -1,6 +1,6 @@
 import { Stack, Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Architecture, Runtime } from 'aws-cdk-lib/aws-lambda';
+import { Architecture, FunctionUrlAuthType, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
@@ -31,7 +31,9 @@ export class JvApiStack extends Stack {
       logGroup,
     });
 
-    const url = apiFunction.addFunctionUrl();
+    const url = apiFunction.addFunctionUrl({
+      authType: FunctionUrlAuthType.NONE,
+    });
 
     const s3 = Bucket.fromBucketName(this, 'CacheBucket', props.jvdataBucket);
 
