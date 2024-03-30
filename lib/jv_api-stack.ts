@@ -21,7 +21,7 @@ export class JvApiStack extends Stack {
     const apiFunction = new NodejsFunction(this, 'ApiFunction', {
       entry: 'src/handler.ts',
       handler: 'handler',
-      runtime: Runtime.NODEJS_18_X,
+      runtime: Runtime.NODEJS_20_X,
       architecture: Architecture.ARM_64,
       timeout: Duration.seconds(30),
       environment: {

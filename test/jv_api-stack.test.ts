@@ -32,4 +32,10 @@ describe('JvApiStack', () => {
       AuthType: 'NONE',
     });
   });
+
+  it('Lambda Runtime Version', () => {
+    template.hasResourceProperties('AWS::Lambda::Function', {
+      Runtime: 'nodejs20.x',
+    });
+  });
 });
