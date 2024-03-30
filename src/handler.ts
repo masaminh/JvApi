@@ -1,5 +1,6 @@
 import serverlessExpress, { getCurrentInvoke } from '@vendia/serverless-express';
-import { Logger, injectLambdaContext } from '@aws-lambda-powertools/logger';
+import { Logger } from '@aws-lambda-powertools/logger';
+import { injectLambdaContext } from '@aws-lambda-powertools/logger/middleware';
 import middy from '@middy/core';
 import app from './app';
 import Log from './log';

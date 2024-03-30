@@ -44,12 +44,12 @@ describe('getRace', () => {
       });
 
     const result = await getRace('2023121601010101');
-    expect(getJvDataMock).nthCalledWith(
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
       1,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/RA2023121601010101.tar.gz',
     );
-    expect(getJvDataMock).nthCalledWith(
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
       2,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/TK2023121601010101.tar.gz',
@@ -91,22 +91,22 @@ describe('getRace', () => {
       .mockReturnValueOnce({ horseNumber: undefined, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' });
 
     const result = await getRace('2023121601010101');
-    expect(listObjectsMock).nthCalledWith(
+    expect(listObjectsMock).toHaveBeenNthCalledWith(
       1,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/SE',
     );
-    expect(getJvDataMock).nthCalledWith(
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
       1,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/RA2023121601010101.tar.gz',
     );
-    expect(getJvDataMock).nthCalledWith(
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
       2,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/SE2023121601010101000123456789.tar.gz',
     );
-    expect(getJvDataMock).nthCalledWith(
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
       3,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/SE2023121601010101001234567890.tar.gz',
@@ -150,22 +150,22 @@ describe('getRace', () => {
       .mockReturnValueOnce({ horseNumber: 2, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' });
 
     const result = await getRace('2023121601010101');
-    expect(listObjectsMock).nthCalledWith(
+    expect(listObjectsMock).toHaveBeenNthCalledWith(
       1,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/SE',
     );
-    expect(getJvDataMock).nthCalledWith(
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
       1,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/RA2023121601010101.tar.gz',
     );
-    expect(getJvDataMock).nthCalledWith(
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
       2,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/SE2023121601010101010123456789.tar.gz',
     );
-    expect(getJvDataMock).nthCalledWith(
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
       3,
       'JVDATA_BUCKET',
       'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/SE2023121601010101021234567890.tar.gz',
