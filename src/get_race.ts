@@ -102,7 +102,7 @@ async function getRaceInfoTk(
 }
 
 function getRaceName(raceName: string, raceGrade: string | undefined): string {
-  const shortenName = raceName.replace(/(.+)ステークス/, '$1S');
+  const shortenName = raceName.replace(/ステークス$/, 'S');
 
   if (raceGrade === undefined) {
     return shortenName;

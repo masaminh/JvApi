@@ -225,6 +225,27 @@ describe('getRace', () => {
     expect(result.raceName).toBe('レース名(グレード)');
   });
 
+  it('getRace: レース名の「ステークス」を「S」に変換', async () => {
+    jest.spyOn(getJvData, 'default')
+      .mockRejectedValueOnce(new NoSuchKey({ $metadata: {}, message: '' }))
+      .mockResolvedValue({ jvlinkVersion: '1234', data: Buffer.from('JV_DATA') });
+    jest.spyOn(getTkData, 'default')
+      .mockReturnValueOnce({
+        date: DateTime.fromISO('20231216'),
+        place: '札幌',
+        raceNumber: 1,
+        raceName: 'なんとかステークス',
+        raceGrade: 'グレード',
+        horses: [
+          { horseId: 'HORSEID_1', horseName: 'HORSENAME_1' },
+          { horseId: 'HORSEID_2', horseName: 'HORSENAME_2' },
+        ],
+      });
+
+    const result = await getRace('2023121601010101');
+    expect(result.raceName).toBe('なんとかS(グレード)');
+  });
+
   it('getRace: Bad raceId length', async () => {
     await expect(() => getRace('20231216010101')).rejects.toThrow();
   });
