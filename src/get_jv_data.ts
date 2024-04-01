@@ -6,6 +6,9 @@ import FsWrapper from './wrapper/fs_wrapper';
 import AwsS3 from './awss3';
 import JvData from './jv_data';
 
+const TAR_MAX_FILES = 2;
+const TAR_MAX_SIZE = 1 * 1000 * 1000; // 1MB
+
 type JvDataProperties = {
   JvlinkVersion: string;
 };
@@ -25,7 +28,25 @@ export default async function getJvData(bucket: string, key: string): Promise<Jv
   try {
     const objectStream = await AwsS3.getObject(bucket, key);
 
-    await pipeline(objectStream, tar.x({ C: jvDataDir }));
+    let fileCount = 0;
+    let totalSize = 0;
+
+    await pipeline(objectStream, tar.x({
+      C: jvDataDir,
+      filter: (path, entry) => {
+        fileCount += 1;
+        if (fileCount > TAR_MAX_FILES) {
+          throw new Error('Reached max. number of files');
+        }
+
+        totalSize += entry.size;
+        if (totalSize > TAR_MAX_SIZE) {
+          throw new Error('Reached max. size');
+        }
+
+        return true;
+      },
+    }));
 
     const properties = JSON.parse(await FsWrapper.readFileString(join(jvDataDir, 'properties'), 'utf-8'));
 
