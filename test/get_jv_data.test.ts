@@ -26,23 +26,28 @@ describe('get_jv_data', () => {
     let untarStreamBuf: Buffer = Buffer.from('');
     untarStream.on('end', () => { untarStreamBuf = Buffer.concat(bufs); });
     const untarMock = jest.spyOn(tar, 'x')
-      .mockReturnValue(untarStream as unknown as void);
+      .mockImplementation((options) => {
+        const func = options.filter;
+        func?.('properties', { size: 100 } as tar.FileStat);
+        func?.('data', { size: 100 } as tar.FileStat);
+        return untarStream;
+      });
     const readFileStringMock = jest.spyOn(FsWrapper, 'readFileString')
       .mockResolvedValue('{"JvlinkVersion":"1234"}');
     const readFileBufferMock = jest.spyOn(FsWrapper, 'readFileBuffer')
       .mockResolvedValue(Buffer.from('DATA'));
     const result = await getJvData('BUCKET', 'KEY');
-    expect(mkdtempMock).toBeCalledTimes(1);
-    expect(mkdtempMock).toBeCalledWith(expect.stringMatching(/^\/.+\/jvdata-$/));
-    expect(getObjectMock).toBeCalledTimes(1);
-    expect(getObjectMock).toBeCalledWith('BUCKET', 'KEY');
-    expect(untarMock).toBeCalledTimes(1);
-    expect(untarMock).toBeCalledWith({ C: '/TEMPDIR' });
+    expect(mkdtempMock).toHaveBeenCalledTimes(1);
+    expect(mkdtempMock).toHaveBeenCalledWith(expect.stringMatching(/^\/.+\/jvdata-$/));
+    expect(getObjectMock).toHaveBeenCalledTimes(1);
+    expect(getObjectMock).toHaveBeenCalledWith('BUCKET', 'KEY');
+    expect(untarMock).toHaveBeenCalledTimes(1);
+    expect(untarMock).toHaveBeenCalledWith(expect.objectContaining({ C: '/TEMPDIR' }));
     expect(untarStreamBuf.toString()).toBe('OBJECT');
-    expect(readFileStringMock).toBeCalledTimes(1);
-    expect(readFileStringMock).toBeCalledWith('/TEMPDIR/properties', 'utf-8');
-    expect(readFileBufferMock).toBeCalledTimes(1);
-    expect(readFileBufferMock).toBeCalledWith('/TEMPDIR/data');
+    expect(readFileStringMock).toHaveBeenCalledTimes(1);
+    expect(readFileStringMock).toHaveBeenCalledWith('/TEMPDIR/properties', 'utf-8');
+    expect(readFileBufferMock).toHaveBeenCalledTimes(1);
+    expect(readFileBufferMock).toHaveBeenCalledWith('/TEMPDIR/data');
     expect(result).toEqual({
       jvlinkVersion: '1234',
       data: expect.any(Buffer),
@@ -59,9 +64,51 @@ describe('get_jv_data', () => {
       transform: (chunk, encoding, callback) => callback(null, chunk),
     });
     jest.spyOn(tar, 'x')
-      .mockReturnValue(untarStream as unknown as void);
+      .mockImplementation((options) => {
+        const func = options.filter;
+        func?.('properties', { size: 100 } as tar.FileStat);
+        func?.('data', { size: 100 } as tar.FileStat);
+        return untarStream;
+      });
     jest.spyOn(FsWrapper, 'readFileString')
       .mockResolvedValue('{"badformat":"1234"}');
+    await expect(() => getJvData('BUCKET', 'KEY')).rejects.toThrow();
+  });
+
+  it('getJvData: ファイル数が多すぎる.', async () => {
+    jest.spyOn(FsWrapper, 'mkdtemp')
+      .mockResolvedValue('/TEMPDIR');
+    jest.spyOn(AwsS3, 'getObject')
+      .mockResolvedValue(Readable.from([Buffer.from('OBJECT')]));
+    const untarStream = new Transform({
+      transform: (chunk, encoding, callback) => callback(null, chunk),
+    });
+    jest.spyOn(tar, 'x')
+      .mockImplementation((options) => {
+        const func = options.filter;
+        func?.('properties', { size: 100 } as tar.FileStat);
+        func?.('data', { size: 100 } as tar.FileStat);
+        func?.('unknown', { size: 100 } as tar.FileStat);
+        return untarStream;
+      });
+    await expect(() => getJvData('BUCKET', 'KEY')).rejects.toThrow();
+  });
+
+  it('getJvData: ファイルが大きすぎる.', async () => {
+    jest.spyOn(FsWrapper, 'mkdtemp')
+      .mockResolvedValue('/TEMPDIR');
+    jest.spyOn(AwsS3, 'getObject')
+      .mockResolvedValue(Readable.from([Buffer.from('OBJECT')]));
+    const untarStream = new Transform({
+      transform: (chunk, encoding, callback) => callback(null, chunk),
+    });
+    jest.spyOn(tar, 'x')
+      .mockImplementation((options) => {
+        const func = options.filter;
+        func?.('properties', { size: 100 } as tar.FileStat);
+        func?.('data', { size: 1 * 1000 * 1000 - 99 } as tar.FileStat);
+        return untarStream;
+      });
     await expect(() => getJvData('BUCKET', 'KEY')).rejects.toThrow();
   });
 });

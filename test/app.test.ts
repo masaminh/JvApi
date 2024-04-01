@@ -127,4 +127,28 @@ describe('app', () => {
     const response = await request(app).get('/raceids?date=20240101');
     expect(response.status).toBe(500);
   });
+
+  it('raceids: x-powered-byヘッダが存在しないこと', async () => {
+    jest.spyOn(getRaceIds, 'default')
+      .mockResolvedValue({ date: '2024-01-01', raceids: ['ID1', 'ID2'] });
+    const response = await request(app).get('/raceids?date=20240101');
+    expect(response.headers).not.toHaveProperty('x-powered-by');
+  });
+
+  it('race: x-powered-byヘッダが存在しないこと', async () => {
+    jest.spyOn(getRace, 'default')
+      .mockResolvedValue({
+        raceId: '2024010101010101',
+        date: '2024-01-01',
+        place: '札幌',
+        raceNumber: 1,
+        raceName: '未勝利',
+        horses: [
+          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1' },
+          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2' },
+        ],
+      });
+    const response = await request(app).get('/races/2024010101010101');
+    expect(response.headers).not.toHaveProperty('x-powered-by');
+  });
 });

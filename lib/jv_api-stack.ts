@@ -1,6 +1,8 @@
 import { Stack, Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Architecture, FunctionUrlAuthType, Runtime } from 'aws-cdk-lib/aws-lambda';
+import {
+  Architecture, FunctionUrlAuthType, Runtime, Tracing,
+} from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Bucket } from 'aws-cdk-lib/aws-s3';
@@ -21,7 +23,7 @@ export class JvApiStack extends Stack {
     const apiFunction = new NodejsFunction(this, 'ApiFunction', {
       entry: 'src/handler.ts',
       handler: 'handler',
-      runtime: Runtime.NODEJS_18_X,
+      runtime: Runtime.NODEJS_20_X,
       architecture: Architecture.ARM_64,
       timeout: Duration.seconds(30),
       environment: {
@@ -29,6 +31,7 @@ export class JvApiStack extends Stack {
         JVDATA_PREFIX: props.jvdataPrefix,
       },
       logGroup,
+      tracing: Tracing.ACTIVE,
     });
 
     const url = apiFunction.addFunctionUrl({

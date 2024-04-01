@@ -6,6 +6,8 @@ import getRace from './get_race';
 
 const app = express();
 
+app.disable('x-powered-by');
+
 function asyncWrapper(fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) {
   return (req: Request, res: Response, next: NextFunction) => {
     Log.info(`start: ${req.url}`);
