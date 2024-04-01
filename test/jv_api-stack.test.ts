@@ -38,4 +38,10 @@ describe('JvApiStack', () => {
       Runtime: 'nodejs20.x',
     });
   });
+
+  it('Tracing', () => {
+    template.hasResourceProperties('AWS::Lambda::Function', {
+      TracingConfig: { Mode: 'Active' },
+    });
+  });
 });

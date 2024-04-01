@@ -1,7 +1,8 @@
 import { S3Client, ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3';
 import { Readable } from 'node:stream';
+import { getTracer } from './powertools';
 
-const client = new S3Client({});
+const client = getTracer().captureAWSv3Client(new S3Client({}));
 
 namespace AwsS3 {
   export type ListObjectsResult = {
