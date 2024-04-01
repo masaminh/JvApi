@@ -1,4 +1,4 @@
-import serverlessExpress, { getCurrentInvoke } from '@vendia/serverless-express';
+import serverlessExpress, { getCurrentInvoke } from '@codegenie/serverless-express';
 import { injectLambdaContext } from '@aws-lambda-powertools/logger/middleware';
 import { captureLambdaHandler } from '@aws-lambda-powertools/tracer/middleware';
 import middy from '@middy/core';
