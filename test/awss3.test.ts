@@ -65,7 +65,7 @@ describe('AwsS3', () => {
         Key: 'KEY',
       })
       .resolves({
-        Body: sdkStreamMixin(Readable.from([Buffer.from('TEST MESSAGE')])),
+        Body: sdkStreamMixin(Readable.from([Buffer.from('TEST MESSAGE')])) as any,
       });
 
     const result = await AwsS3.getObject('BUCKET', 'KEY');
