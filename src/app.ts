@@ -53,7 +53,7 @@ app.get('/races/:raceid', asyncWrapper(async (req, res) => {
   res.json(race);
 }));
 
-app.all('*', (req, res) => {
+app.all('/:wildcard', (req, res) => {
   res.sendStatus(404);
 });
 
