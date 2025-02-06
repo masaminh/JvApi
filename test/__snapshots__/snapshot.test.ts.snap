@@ -27,7 +27,6 @@ exports[`snapshot test 1`] = `
         },
         "Environment": {
           "Variables": {
-            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "JVDATA_BUCKET": "jvbucket",
             "JVDATA_PREFIX": "JVDATAPREFIX",
           },
