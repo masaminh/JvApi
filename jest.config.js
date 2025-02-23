@@ -7,4 +7,5 @@ module.exports = {
   },
   collectCoverage: true,
   coveragePathIgnorePatterns: ['<rootDir>/src/wrapper/'],
+  snapshotSerializers: ['<rootDir>/test/snapshot-plugin.ts'],
 };
