@@ -8,7 +8,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "pretest": "npm run synth",
+    "pretest": "npm run synth > /dev/null",
     "cdk": "cdk",
     "synth": "cdk synth",
     "deploy": "cdk deploy --require-approval never",
