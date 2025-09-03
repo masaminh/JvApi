@@ -1,4 +1,4 @@
-import serverlessExpress, { getCurrentInvoke } from '@codegenie/serverless-express';
+import serverlessExpress from '@codegenie/serverless-express';
 import { injectLambdaContext } from '@aws-lambda-powertools/logger/middleware';
 import { captureLambdaHandler } from '@aws-lambda-powertools/tracer/middleware';
 import middy from '@middy/core';
@@ -10,15 +10,9 @@ const logger = getLogger('INFO');
 
 Log.initialize({ logger });
 
-app.use((req, res, next) => {
-  const { event } = getCurrentInvoke();
-  logger.addPersistentLogAttributes({ event });
-  next();
-});
-
 const tracer = getTracer();
 
 // eslint-disable-next-line import/prefer-default-export
 export const handler = middy(serverlessExpress({ app }))
-  .use(injectLambdaContext(logger))
+  .use(injectLambdaContext(logger, { logEvent: true }))
   .use(captureLambdaHandler(tracer));
