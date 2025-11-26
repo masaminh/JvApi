@@ -35,7 +35,7 @@ describe('JvApiStack', () => {
 
   it('Lambda Runtime Version', () => {
     template.hasResourceProperties('AWS::Lambda::Function', {
-      Runtime: 'nodejs20.x',
+      Runtime: 'nodejs22.x',
     });
   });
 
