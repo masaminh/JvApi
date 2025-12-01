@@ -49,7 +49,7 @@
     "@middy/core": "6.4.4",
     "aws-cdk-lib": "2.222.0",
     "constructs": "^10.4.2",
-    "express": "^5.0.1",
+    "express": "^5.1.0",
     "iconv-lite": "^0.6.3",
     "luxon": "^3.4.4",
     "source-map-support": "^0.5.21",
