@@ -30,8 +30,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Copy cdk.context.json
+        env:
+          CDK_CONTEXT_URI: ${{ secrets.CDK_CONTEXT_URI }}
         run: |
-          aws s3 cp ${{ secrets.CDK_CONTEXT_URI }} cdk.context.json
+          aws s3 cp "$CDK_CONTEXT_URI" cdk.context.json
       - name: Test
         run: npm run test
       - name: SonarCloud Scan
