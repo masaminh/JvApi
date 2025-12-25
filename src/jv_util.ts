@@ -10,7 +10,7 @@ namespace JvUtil {
   }
 
   export function getInteger(jvData: Buffer, pos: number, size: number): number {
-    return parseInt(jvData.toString('ascii', pos - 1, pos + size - 1), 10);
+    return Number.parseInt(jvData.toString('ascii', pos - 1, pos + size - 1), 10);
   }
 
   const PlaceTable = new Map<string, string>([

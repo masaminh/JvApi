@@ -12,9 +12,9 @@ import getTkData from './get_tk_data';
 async function getSeKeys(bucket: string, racePrefix: string): Promise<string[]> {
   const { objects } = await AwsS3.listObjects(bucket, `${racePrefix}SE`);
   objects.sort((a, b) => a.localeCompare(b));
-  const lastkey = objects.slice(-1)[0];
+  const lastkey = objects.at(-1);
 
-  if (lastkey.replace(racePrefix, '').substring(18, 20) === '00') {
+  if (!lastkey || lastkey.replace(racePrefix, '').substring(18, 20) === '00') {
     return objects;
   }
 

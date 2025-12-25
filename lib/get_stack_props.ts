@@ -8,7 +8,7 @@ export default function getStackProps(app: Construct): JvApiStackProps {
   const stackName = app.node.tryGetContext('stackName');
 
   if (typeof jvdataBucket !== 'string' || typeof jvdataPrefix !== 'string' || typeof stage !== 'string') {
-    throw new Error('jvdataBucket and jvdataPrefix and stage must be set in context');
+    throw new TypeError('jvdataBucket and jvdataPrefix and stage must be set in context');
   }
 
   if (stackName !== undefined && typeof stackName !== 'string') {

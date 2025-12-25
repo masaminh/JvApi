@@ -25,7 +25,7 @@ export default function getTkData(jvData: JvData): ReturnType {
   const raceGrade = JvUtil.getRaceGradeName(gradeCode, raceLimitation);
   const horseCount = JvUtil.getInteger(data, 653, 3);
 
-  const horses = [...Array(horseCount)].map((_, i) => {
+  const horses = Array.from({ length: horseCount }).map((_, i) => {
     const buf = data.subarray(655 + i * 70, 655 + (i + 1) * 70);
     const horseId = JvUtil.getString(buf, 4, 10);
     const horseName = JvUtil.getJapaneseText(buf, 14, 36);
