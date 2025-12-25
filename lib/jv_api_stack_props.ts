@@ -1,4 +1,4 @@
-import { StackProps } from 'aws-cdk-lib';
+import { StackProps } from 'aws-cdk-lib'
 
 interface JvApiStackProps extends StackProps {
   jvdataBucket: string;
@@ -6,4 +6,4 @@ interface JvApiStackProps extends StackProps {
   stage: string;
 }
 
-export default JvApiStackProps;
+export default JvApiStackProps

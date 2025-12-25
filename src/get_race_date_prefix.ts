@@ -1,8 +1,8 @@
-import { DateTime } from 'luxon';
-import getEnvironment from './get_environment';
+import { DateTime } from 'luxon'
+import getEnvironment from './get_environment'
 
-export default function getRaceDatePrefix(date: DateTime): string {
-  const cachePrefix = getEnvironment('JVDATA_PREFIX');
+export default function getRaceDatePrefix (date: DateTime): string {
+  const cachePrefix = getEnvironment('JVDATA_PREFIX')
 
-  return `${cachePrefix}/RACE/${date.toFormat('yyyy/LL/dd/')}`;
+  return `${cachePrefix}/RACE/${date.toFormat('yyyy/LL/dd/')}`
 }
