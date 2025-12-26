@@ -2,14 +2,14 @@ import { Readable } from 'node:stream'
 import { mockClient } from 'aws-sdk-client-mock'
 import { GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3'
 import { sdkStreamMixin } from '@smithy/util-stream'
-import 'aws-sdk-client-mock-jest'
+import 'aws-sdk-client-mock-vitest/extend'
 import AwsS3 from '../src/awss3'
 
 describe('AwsS3', () => {
   const s3Mock = mockClient(S3Client)
 
   beforeEach(() => {
-    jest.resetAllMocks()
+    vitest.resetAllMocks()
     s3Mock.reset()
   })
 

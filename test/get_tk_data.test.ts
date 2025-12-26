@@ -2,15 +2,15 @@ import { DateTime } from 'luxon'
 import getTkData from '../src/get_tk_data'
 import JvUtil from '../src/jv_util'
 
-jest.mock('../src/jv_util')
+vitest.mock('../src/jv_util')
 
 describe('get_tk_data', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
+    vitest.resetAllMocks()
   })
 
   it('getTkData', () => {
-    jest.spyOn(JvUtil, 'getString')
+    vitest.spyOn(JvUtil, 'getString')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 12 && size === 8) {
           return '20240101'
@@ -30,7 +30,7 @@ describe('get_tk_data', () => {
 
         return ''
       })
-    jest.spyOn(JvUtil, 'getJapaneseText')
+    vitest.spyOn(JvUtil, 'getJapaneseText')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 33 && size === 60) {
           return 'レース名'
@@ -42,7 +42,7 @@ describe('get_tk_data', () => {
 
         return ''
       })
-    jest.spyOn(JvUtil, 'getInteger')
+    vitest.spyOn(JvUtil, 'getInteger')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 26 && size === 2) {
           return 1
@@ -58,9 +58,9 @@ describe('get_tk_data', () => {
 
         return Number.NaN
       })
-    const getPlaceNameMock = jest.spyOn(JvUtil, 'getPlaceName')
+    const getPlaceNameMock = vitest.spyOn(JvUtil, 'getPlaceName')
       .mockReturnValue('札幌')
-    const getRaceGradeNameMock = jest.spyOn(JvUtil, 'getRaceGradeName')
+    const getRaceGradeNameMock = vitest.spyOn(JvUtil, 'getRaceGradeName')
       .mockReturnValue('レースグレード名')
     const result = getTkData({ jvlinkVersion: '1234', data: Buffer.from('0'.repeat(1000)) })
     expect(getPlaceNameMock).toHaveBeenCalledTimes(1)

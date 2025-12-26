@@ -1,15 +1,15 @@
 import getSeData from '../src/get_se_data'
 import JvUtil from '../src/jv_util'
 
-jest.mock('../src/jv_util')
+vitest.mock('../src/jv_util')
 
 describe('get_se_data', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
+    vitest.resetAllMocks()
   })
 
   it('getSeData', () => {
-    const getStringMock = jest.spyOn(JvUtil, 'getString')
+    const getStringMock = vitest.spyOn(JvUtil, 'getString')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 31 && size === 10) {
           return '1234567890'
@@ -17,7 +17,7 @@ describe('get_se_data', () => {
 
         return ''
       })
-    const getJapaneseTextMock = jest.spyOn(JvUtil, 'getJapaneseText')
+    const getJapaneseTextMock = vitest.spyOn(JvUtil, 'getJapaneseText')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 41 && size === 36) {
           return '馬名'
@@ -25,7 +25,7 @@ describe('get_se_data', () => {
 
         return ''
       })
-    const getIntegerMock = jest.spyOn(JvUtil, 'getInteger')
+    const getIntegerMock = vitest.spyOn(JvUtil, 'getInteger')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 29 && size === 2) {
           return 1
@@ -50,7 +50,7 @@ describe('get_se_data', () => {
   })
 
   it('getSeData: no horseId', () => {
-    jest.spyOn(JvUtil, 'getString')
+    vitest.spyOn(JvUtil, 'getString')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 31 && size === 10) {
           return '0000000000'
@@ -58,7 +58,7 @@ describe('get_se_data', () => {
 
         return ''
       })
-    jest.spyOn(JvUtil, 'getJapaneseText')
+    vitest.spyOn(JvUtil, 'getJapaneseText')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 41 && size === 36) {
           return '馬名'
@@ -66,7 +66,7 @@ describe('get_se_data', () => {
 
         return ''
       })
-    jest.spyOn(JvUtil, 'getInteger')
+    vitest.spyOn(JvUtil, 'getInteger')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 29 && size === 2) {
           return 1
@@ -81,7 +81,7 @@ describe('get_se_data', () => {
   })
 
   it('getSeData: no horseNumber', () => {
-    jest.spyOn(JvUtil, 'getString')
+    vitest.spyOn(JvUtil, 'getString')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 31 && size === 10) {
           return '1234567890'
@@ -89,7 +89,7 @@ describe('get_se_data', () => {
 
         return ''
       })
-    jest.spyOn(JvUtil, 'getJapaneseText')
+    vitest.spyOn(JvUtil, 'getJapaneseText')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 41 && size === 36) {
           return '馬名'
@@ -97,7 +97,7 @@ describe('get_se_data', () => {
 
         return ''
       })
-    jest.spyOn(JvUtil, 'getInteger')
+    vitest.spyOn(JvUtil, 'getInteger')
       .mockImplementation((jvData, pos, size) => {
         if (pos === 29 && size === 2) {
           return 0

@@ -5,12 +5,12 @@ import getRaceIds from '../src/get_raceids'
 
 describe('getRaceIds', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
+    vitest.resetAllMocks()
   })
 
   it('getRaceIds', async () => {
-    jest.spyOn(getEnvironment, 'default').mockImplementation((name) => name)
-    jest.spyOn(AwsS3, 'listObjects')
+    vitest.spyOn(getEnvironment, 'default').mockImplementation((name) => name)
+    vitest.spyOn(AwsS3, 'listObjects')
       .mockResolvedValue({
         prefixes: [
           'JVDATA_PREFIX/RACE/2023/12/03/RACE_ID_1/',

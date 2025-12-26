@@ -8,17 +8,17 @@ import * as getSeData from '../src/get_se_data'
 import * as getTkData from '../src/get_tk_data'
 import AwsS3 from '../src/awss3'
 
-jest.mock('../src/get_environment')
-jest.mock('../src/get_jv_data')
-jest.mock('../src/get_ra_data')
-jest.mock('../src/get_se_data')
-jest.mock('../src/get_tk_data')
-jest.mock('../src/awss3')
+vitest.mock('../src/get_environment')
+vitest.mock('../src/get_jv_data')
+vitest.mock('../src/get_ra_data')
+vitest.mock('../src/get_se_data')
+vitest.mock('../src/get_tk_data')
+vitest.mock('../src/awss3')
 
 describe('getRace', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
-    jest.spyOn(getEnvironment, 'default')
+    vitest.resetAllMocks()
+    vitest.spyOn(getEnvironment, 'default')
       .mockImplementation((name: string) => {
         if (name === 'JVDATA_BUCKET') { return 'JVDATA_BUCKET' }
         if (name === 'JVDATA_PREFIX') { return 'JVDATA_PREFIX' }
@@ -27,10 +27,10 @@ describe('getRace', () => {
   })
 
   it('getRace: 特別登録', async () => {
-    const getJvDataMock = jest.spyOn(getJvData, 'default')
+    const getJvDataMock = vitest.spyOn(getJvData, 'default')
       .mockRejectedValueOnce(new NoSuchKey({ $metadata: {}, message: '' }))
       .mockResolvedValue({ jvlinkVersion: '1234', data: Buffer.from('JV_DATA') })
-    jest.spyOn(getTkData, 'default')
+    vitest.spyOn(getTkData, 'default')
       .mockReturnValueOnce({
         date: DateTime.fromISO('20231216'),
         place: '札幌',
@@ -68,7 +68,7 @@ describe('getRace', () => {
   })
 
   it('getRace: 馬番決定前', async () => {
-    const listObjectsMock = jest.spyOn(AwsS3, 'listObjects')
+    const listObjectsMock = vitest.spyOn(AwsS3, 'listObjects')
       .mockResolvedValueOnce({
         prefixes: [],
         objects: [
@@ -76,9 +76,9 @@ describe('getRace', () => {
           'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/SE2023121601010101001234567890.tar.gz',
         ],
       })
-    const getJvDataMock = jest.spyOn(getJvData, 'default')
+    const getJvDataMock = vitest.spyOn(getJvData, 'default')
       .mockResolvedValue({ jvlinkVersion: '1234', data: Buffer.from('JV_DATA') })
-    jest.spyOn(getRaData, 'default')
+    vitest.spyOn(getRaData, 'default')
       .mockReturnValueOnce({
         date: DateTime.fromISO('20231216'),
         place: '札幌',
@@ -86,7 +86,7 @@ describe('getRace', () => {
         raceName: '',
         raceGrade: '未勝利',
       })
-    jest.spyOn(getSeData, 'default')
+    vitest.spyOn(getSeData, 'default')
       .mockReturnValueOnce({ horseNumber: undefined, horseId: 'HORSEID_1', horseName: 'HORSENAME_1' })
       .mockReturnValueOnce({ horseNumber: undefined, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' })
 
@@ -125,7 +125,7 @@ describe('getRace', () => {
   })
 
   it('getRace: 馬番決定後', async () => {
-    const listObjectsMock = jest.spyOn(AwsS3, 'listObjects')
+    const listObjectsMock = vitest.spyOn(AwsS3, 'listObjects')
       .mockResolvedValueOnce({
         prefixes: [],
         objects: [
@@ -135,9 +135,9 @@ describe('getRace', () => {
           'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/SE2023121601010101021234567890.tar.gz',
         ],
       })
-    const getJvDataMock = jest.spyOn(getJvData, 'default')
+    const getJvDataMock = vitest.spyOn(getJvData, 'default')
       .mockResolvedValue({ jvlinkVersion: '1234', data: Buffer.from('JV_DATA') })
-    jest.spyOn(getRaData, 'default')
+    vitest.spyOn(getRaData, 'default')
       .mockReturnValueOnce({
         date: DateTime.fromISO('20231216'),
         place: '札幌',
@@ -145,7 +145,7 @@ describe('getRace', () => {
         raceName: '',
         raceGrade: '未勝利',
       })
-    jest.spyOn(getSeData, 'default')
+    vitest.spyOn(getSeData, 'default')
       .mockReturnValueOnce({ horseNumber: 1, horseId: 'HORSEID_1', horseName: 'HORSENAME_1' })
       .mockReturnValueOnce({ horseNumber: 2, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' })
 
@@ -184,10 +184,10 @@ describe('getRace', () => {
   })
 
   it('getRace: レース名あり、グレードなし', async () => {
-    jest.spyOn(getJvData, 'default')
+    vitest.spyOn(getJvData, 'default')
       .mockRejectedValueOnce(new NoSuchKey({ $metadata: {}, message: '' }))
       .mockResolvedValue({ jvlinkVersion: '1234', data: Buffer.from('JV_DATA') })
-    jest.spyOn(getTkData, 'default')
+    vitest.spyOn(getTkData, 'default')
       .mockReturnValueOnce({
         date: DateTime.fromISO('20231216'),
         place: '札幌',
@@ -205,10 +205,10 @@ describe('getRace', () => {
   })
 
   it('getRace: レース名あり、グレードあり', async () => {
-    jest.spyOn(getJvData, 'default')
+    vitest.spyOn(getJvData, 'default')
       .mockRejectedValueOnce(new NoSuchKey({ $metadata: {}, message: '' }))
       .mockResolvedValue({ jvlinkVersion: '1234', data: Buffer.from('JV_DATA') })
-    jest.spyOn(getTkData, 'default')
+    vitest.spyOn(getTkData, 'default')
       .mockReturnValueOnce({
         date: DateTime.fromISO('20231216'),
         place: '札幌',
@@ -226,10 +226,10 @@ describe('getRace', () => {
   })
 
   it('getRace: レース名の「ステークス」を「S」に変換', async () => {
-    jest.spyOn(getJvData, 'default')
+    vitest.spyOn(getJvData, 'default')
       .mockRejectedValueOnce(new NoSuchKey({ $metadata: {}, message: '' }))
       .mockResolvedValue({ jvlinkVersion: '1234', data: Buffer.from('JV_DATA') })
-    jest.spyOn(getTkData, 'default')
+    vitest.spyOn(getTkData, 'default')
       .mockReturnValueOnce({
         date: DateTime.fromISO('20231216'),
         place: '札幌',
@@ -255,7 +255,7 @@ describe('getRace', () => {
   })
 
   it('getRace: getJvData occured Error', async () => {
-    jest.spyOn(getJvData, 'default')
+    vitest.spyOn(getJvData, 'default')
       .mockRejectedValueOnce(new Error('getJvData error'))
     await expect(() => getRace('2023123101010101')).rejects.toThrow()
   })
