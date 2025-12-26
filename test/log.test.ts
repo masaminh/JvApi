@@ -14,8 +14,8 @@ describe('log', () => {
 
     Log.initialize({ logger })
     Log.info('test')
-    expect(logger.info).toBeCalledTimes(1)
-    expect(logger.info).toBeCalledWith('test')
+    expect(logger.info).toHaveBeenCalledTimes(1)
+    expect(logger.info).toHaveBeenCalledWith('test')
   })
 
   it('info: message, error', () => {
@@ -26,9 +26,9 @@ describe('log', () => {
     }
 
     Log.initialize({ logger })
-    Log.info('test', new Error())
-    expect(logger.info).toBeCalledTimes(1)
-    expect(logger.info).toBeCalledWith('test', expect.any(Error))
+    Log.info('test', new Error('test error'))
+    expect(logger.info).toHaveBeenCalledTimes(1)
+    expect(logger.info).toHaveBeenCalledWith('test', expect.any(Error))
   })
 
   it('warn: message', () => {
@@ -40,8 +40,8 @@ describe('log', () => {
 
     Log.initialize({ logger })
     Log.warn('test')
-    expect(logger.warn).toBeCalledTimes(1)
-    expect(logger.warn).toBeCalledWith('test')
+    expect(logger.warn).toHaveBeenCalledTimes(1)
+    expect(logger.warn).toHaveBeenCalledWith('test')
   })
 
   it('warn: message, error', () => {
@@ -52,9 +52,9 @@ describe('log', () => {
     }
 
     Log.initialize({ logger })
-    Log.warn('test', new Error())
-    expect(logger.warn).toBeCalledTimes(1)
-    expect(logger.warn).toBeCalledWith('test', expect.any(Error))
+    Log.warn('test', new Error('test error'))
+    expect(logger.warn).toHaveBeenCalledTimes(1)
+    expect(logger.warn).toHaveBeenCalledWith('test', expect.any(Error))
   })
 
   it('error: message', () => {
@@ -66,8 +66,8 @@ describe('log', () => {
 
     Log.initialize({ logger })
     Log.error('test')
-    expect(logger.error).toBeCalledTimes(1)
-    expect(logger.error).toBeCalledWith('test')
+    expect(logger.error).toHaveBeenCalledTimes(1)
+    expect(logger.error).toHaveBeenCalledWith('test')
   })
 
   it('error: message, error', () => {
@@ -78,8 +78,8 @@ describe('log', () => {
     }
 
     Log.initialize({ logger })
-    Log.error('test', new Error())
-    expect(logger.error).toBeCalledTimes(1)
-    expect(logger.error).toBeCalledWith('test', expect.any(Error))
+    Log.error('test', new Error('test error'))
+    expect(logger.error).toHaveBeenCalledTimes(1)
+    expect(logger.error).toHaveBeenCalledWith('test', expect.any(Error))
   })
 })

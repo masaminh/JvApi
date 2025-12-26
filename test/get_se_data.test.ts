@@ -30,7 +30,7 @@ describe('get_se_data', () => {
         if (pos === 29 && size === 2) {
           return 1
         }
-        return NaN
+        return Number.NaN
       })
     const result = getSeData({ jvlinkVersion: '1234', data: Buffer.from('DATA') })
     getStringMock.mock.calls.forEach((params) => {
@@ -71,7 +71,7 @@ describe('get_se_data', () => {
         if (pos === 29 && size === 2) {
           return 1
         }
-        return NaN
+        return Number.NaN
       })
     const result = getSeData({ jvlinkVersion: '1234', data: Buffer.from('DATA') })
     expect(result).toEqual({
@@ -102,7 +102,7 @@ describe('get_se_data', () => {
         if (pos === 29 && size === 2) {
           return 0
         }
-        return NaN
+        return Number.NaN
       })
     const result = getSeData({ jvlinkVersion: '1234', data: Buffer.from('DATA') })
     expect(result).toEqual({

@@ -22,7 +22,7 @@ describe('getRace', () => {
       .mockImplementation((name: string) => {
         if (name === 'JVDATA_BUCKET') { return 'JVDATA_BUCKET' }
         if (name === 'JVDATA_PREFIX') { return 'JVDATA_PREFIX' }
-        throw new Error()
+        throw new Error(`Unexpected environment variable name: ${name}`)
       })
   })
 
@@ -256,7 +256,7 @@ describe('getRace', () => {
 
   it('getRace: getJvData occured Error', async () => {
     jest.spyOn(getJvData, 'default')
-      .mockRejectedValueOnce(new Error())
+      .mockRejectedValueOnce(new Error('getJvData error'))
     await expect(() => getRace('2023123101010101')).rejects.toThrow()
   })
 })

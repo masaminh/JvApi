@@ -56,17 +56,17 @@ describe('get_tk_data', () => {
           return 2
         }
 
-        return NaN
+        return Number.NaN
       })
     const getPlaceNameMock = jest.spyOn(JvUtil, 'getPlaceName')
       .mockReturnValue('札幌')
     const getRaceGradeNameMock = jest.spyOn(JvUtil, 'getRaceGradeName')
       .mockReturnValue('レースグレード名')
     const result = getTkData({ jvlinkVersion: '1234', data: Buffer.from('0'.repeat(1000)) })
-    expect(getPlaceNameMock).toBeCalledTimes(1)
-    expect(getPlaceNameMock).toBeCalledWith('01')
-    expect(getRaceGradeNameMock).toBeCalledTimes(1)
-    expect(getRaceGradeNameMock).toBeCalledWith('1', 500)
+    expect(getPlaceNameMock).toHaveBeenCalledTimes(1)
+    expect(getPlaceNameMock).toHaveBeenCalledWith('01')
+    expect(getRaceGradeNameMock).toHaveBeenCalledTimes(1)
+    expect(getRaceGradeNameMock).toHaveBeenCalledWith('1', 500)
     expect(result).toEqual({
       date: DateTime.fromISO('20240101').setZone('Asia/Tokyo'),
       place: '札幌',
