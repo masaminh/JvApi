@@ -24,6 +24,7 @@ async function getSeKeys (bucket: string, racePrefix: string): Promise<string[]>
 type RaceInfo = {
   raceId: string;
   date: DateTime;
+  time: string | undefined;
   place: string;
   raceNumber: number;
   raceName: string;
@@ -66,6 +67,7 @@ async function getRaceInfoRa (
   return {
     raceId,
     date: raData.date,
+    time: raData.time,
     place: raData.place,
     raceNumber: raData.raceNumber,
     raceName: raData.raceName,
@@ -89,6 +91,7 @@ async function getRaceInfoTk (
   return {
     raceId,
     date: tkData.date,
+    time: undefined,
     place: tkData.place,
     raceNumber: tkData.raceNumber,
     raceName: tkData.raceName,
@@ -118,6 +121,7 @@ function getRaceName (raceName: string, raceGrade: string | undefined): string {
 type ReturnType = {
   raceId: string;
   date: string;
+  time: string | undefined;
   place: string;
   raceNumber: number;
   raceName: string;
@@ -147,6 +151,7 @@ export default async function getRace (raceId: string): Promise<ReturnType> {
   return {
     raceId,
     date: raceInfo.date.toISODate() as string,
+    time: raceInfo.time,
     place: raceInfo.place,
     raceNumber: raceInfo.raceNumber,
     raceName: getRaceName(raceInfo.raceName, raceInfo.raceGrade),
