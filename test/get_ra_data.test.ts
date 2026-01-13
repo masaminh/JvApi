@@ -9,9 +9,15 @@ describe('get_ra_data', () => {
     vitest.resetAllMocks()
   })
 
-  it('getRaData', () => {
+  it.each([
+    { dataType: 'A', expected: undefined },
+    { dataType: '1', expected: '01:02' }
+  ])('getRaData', ({ dataType, expected }) => {
     const getStringMock = vitest.spyOn(JvUtil, 'getString')
       .mockImplementation((jvData, pos, size) => {
+        if (pos === 3 && size === 1) {
+          return dataType
+        }
         if (pos === 12 && size === 8) {
           return '20240101'
         }
@@ -22,6 +28,14 @@ describe('get_ra_data', () => {
 
         if (pos === 615 && size === 1) {
           return '1'
+        }
+
+        if (pos === 874 && size === 2) {
+          return '01'
+        }
+
+        if (pos === 876 && size === 2) {
+          return '02'
         }
 
         return ''
@@ -66,6 +80,7 @@ describe('get_ra_data', () => {
     expect(getRaceGradeNameMock).toHaveBeenCalledWith('1', 500)
     expect(result).toEqual({
       date: DateTime.fromISO('20240101').setZone('Asia/Tokyo'),
+      time: expected,
       place: '札幌',
       raceNumber: 1,
       raceName: 'レース名',

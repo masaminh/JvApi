@@ -55,6 +55,7 @@ describe('app', () => {
       .mockResolvedValue({
         raceId: '2024010101010101',
         date: '2024-01-01',
+        time: '12:00:00',
         place: '札幌',
         raceNumber: 1,
         raceName: '未勝利',
@@ -68,6 +69,7 @@ describe('app', () => {
     expect(response.body).toEqual({
       raceId: '2024010101010101',
       date: '2024-01-01',
+      time: '12:00:00',
       place: '札幌',
       raceNumber: 1,
       raceName: '未勝利',
@@ -85,6 +87,7 @@ describe('app', () => {
       .mockResolvedValue({
         raceId: '2024010101010101',
         date: '2024-01-01',
+        time: '12:00:00',
         place: '札幌',
         raceNumber: 1,
         raceName: '未勝利',
@@ -103,6 +106,7 @@ describe('app', () => {
       .mockResolvedValue({
         raceId: '2024010101010101',
         date: '2024-01-01',
+        time: '12:00:00',
         place: '札幌',
         raceNumber: 1,
         raceName: '未勝利',
@@ -140,6 +144,7 @@ describe('app', () => {
       .mockResolvedValue({
         raceId: '2024010101010101',
         date: '2024-01-01',
+        time: '12:00:00',
         place: '札幌',
         raceNumber: 1,
         raceName: '未勝利',
