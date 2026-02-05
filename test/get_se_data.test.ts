@@ -30,6 +30,12 @@ describe('get_se_data', () => {
         if (pos === 29 && size === 2) {
           return 1
         }
+        if (pos === 332 && size === 1) {
+          return 0
+        }
+        if (pos === 335 && size === 2) {
+          return 1
+        }
         return Number.NaN
       })
     const result = getSeData({ jvlinkVersion: '1234', data: Buffer.from('DATA') })
@@ -46,6 +52,7 @@ describe('get_se_data', () => {
       horseNumber: 1,
       horseId: '1234567890',
       horseName: '馬名',
+      order: 1,
     })
   })
 
@@ -71,12 +78,19 @@ describe('get_se_data', () => {
         if (pos === 29 && size === 2) {
           return 1
         }
+        if (pos === 332 && size === 1) {
+          return 0
+        }
+        if (pos === 335 && size === 2) {
+          return 1
+        }
         return Number.NaN
       })
     const result = getSeData({ jvlinkVersion: '1234', data: Buffer.from('DATA') })
     expect(result).toEqual({
       horseNumber: 1,
       horseName: '馬名',
+      order: 1,
     })
   })
 
@@ -102,10 +116,94 @@ describe('get_se_data', () => {
         if (pos === 29 && size === 2) {
           return 0
         }
+        if (pos === 332 && size === 1) {
+          return 0
+        }
+        if (pos === 335 && size === 2) {
+          return 1
+        }
         return Number.NaN
       })
     const result = getSeData({ jvlinkVersion: '1234', data: Buffer.from('DATA') })
     expect(result).toEqual({
+      horseId: '1234567890',
+      horseName: '馬名',
+      order: 1,
+    })
+  })
+
+  it('getSeData: 競走除外', () => {
+    vitest.spyOn(JvUtil, 'getString')
+      .mockImplementation((jvData, pos, size) => {
+        if (pos === 31 && size === 10) {
+          return '1234567890'
+        }
+
+        return ''
+      })
+    vitest.spyOn(JvUtil, 'getJapaneseText')
+      .mockImplementation((jvData, pos, size) => {
+        if (pos === 41 && size === 36) {
+          return '馬名'
+        }
+
+        return ''
+      })
+    vitest.spyOn(JvUtil, 'getInteger')
+      .mockImplementation((jvData, pos, size) => {
+        if (pos === 29 && size === 2) {
+          return 1
+        }
+        if (pos === 332 && size === 1) {
+          return 3
+        }
+        if (pos === 335 && size === 2) {
+          return 0
+        }
+        return Number.NaN
+      })
+    const result = getSeData({ jvlinkVersion: '1234', data: Buffer.from('DATA') })
+    expect(result).toEqual({
+      horseNumber: 1,
+      horseId: '1234567890',
+      horseName: '馬名',
+      order: '競走除外',
+    })
+  })
+
+  it('getSeData: レース前', () => {
+    vitest.spyOn(JvUtil, 'getString')
+      .mockImplementation((jvData, pos, size) => {
+        if (pos === 31 && size === 10) {
+          return '1234567890'
+        }
+
+        return ''
+      })
+    vitest.spyOn(JvUtil, 'getJapaneseText')
+      .mockImplementation((jvData, pos, size) => {
+        if (pos === 41 && size === 36) {
+          return '馬名'
+        }
+
+        return ''
+      })
+    vitest.spyOn(JvUtil, 'getInteger')
+      .mockImplementation((jvData, pos, size) => {
+        if (pos === 29 && size === 2) {
+          return 1
+        }
+        if (pos === 332 && size === 1) {
+          return 0
+        }
+        if (pos === 335 && size === 2) {
+          return 0
+        }
+        return Number.NaN
+      })
+    const result = getSeData({ jvlinkVersion: '1234', data: Buffer.from('DATA') })
+    expect(result).toEqual({
+      horseNumber: 1,
       horseId: '1234567890',
       horseName: '馬名',
     })
