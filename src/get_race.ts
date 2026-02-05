@@ -5,7 +5,7 @@ import getRaceDatePrefix from './get_race_date_prefix'
 import getJvData from './get_jv_data'
 import getRaData from './get_ra_data'
 import AwsS3 from './awss3'
-import getSeData from './get_se_data'
+import getSeData, { OrderType } from './get_se_data'
 import JvData from './jv_data'
 import getTkData from './get_tk_data'
 
@@ -33,6 +33,7 @@ type RaceInfo = {
     horseNumber: number | undefined;
     horseId: string | undefined;
     horseName: string;
+    order: OrderType
   }[]
 }
 
@@ -76,6 +77,7 @@ async function getRaceInfoRa (
       horseNumber: info.horseNumber,
       horseId: info.horseId,
       horseName: info.horseName,
+      order: info.order,
     })),
   }
 }
@@ -100,6 +102,7 @@ async function getRaceInfoTk (
       horseNumber: undefined,
       horseId: horse.horseId,
       horseName: horse.horseName,
+      order: undefined,
     })),
   }
 }
@@ -129,6 +132,7 @@ type ReturnType = {
     horseNumber: number | undefined;
     horseId: string | undefined;
     horseName: string;
+    order: OrderType
   }[]
 }
 
