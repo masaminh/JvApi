@@ -45,7 +45,7 @@
     "@aws-sdk/client-s3": "^3.982.0",
     "@codegenie/serverless-express": "^4.17.0",
     "@middy/core": "6.4.4",
-    "aws-cdk-lib": "^2.240.0",
+    "aws-cdk-lib": "^2.245.0",
     "constructs": "^10.4.2",
     "express": "^5.2.0",
     "iconv-lite": "^0.6.3",
