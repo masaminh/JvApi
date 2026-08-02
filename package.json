@@ -25,7 +25,7 @@
     "@types/luxon": "^3.4.2",
     "@types/node": "^22",
     "@types/supertest": "^6.0.2",
-    "@types/tar": "^6.1.11",
+    "@types/tar": "^7.0.87",
     "@vitest/coverage-v8": "^4.1.8",
     "aws-cdk": "^2.1134.0",
     "aws-sdk-client-mock": "^4.0.1",
@@ -45,12 +45,12 @@
     "@aws-sdk/client-s3": "^3.982.0",
     "@codegenie/serverless-express": "^4.17.0",
     "@middy/core": "6.4.4",
-    "aws-cdk-lib": "^2.260.0",
+    "aws-cdk-lib": "^2.263.0",
     "constructs": "^10.4.2",
     "express": "^5.2.0",
     "iconv-lite": "^0.6.3",
     "luxon": "^3.4.4",
     "source-map-support": "^0.5.21",
-    "tar": "^7.5.21"
+    "tar": "^7.5.22"
   }
 }
