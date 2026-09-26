@@ -43,9 +43,6 @@ updates:
         patterns:
           - "vitest"
           - "@vitest/*"
-        update-types:
-          - "minor"
-          - "patch"
       eslint:
         patterns:
           - "eslint"
