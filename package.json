@@ -41,8 +41,8 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
-    "@aws-lambda-powertools/logger": "^2.25.2",
-    "@aws-lambda-powertools/tracer": "^2.25.2",
+    "@aws-lambda-powertools/logger": "^2.36.0",
+    "@aws-lambda-powertools/tracer": "^2.36.0",
     "@aws-sdk/client-s3": "^3.1154.0",
     "@codegenie/serverless-express": "^4.17.0",
     "@middy/core": "6.4.4",
