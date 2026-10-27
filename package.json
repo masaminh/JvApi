@@ -27,7 +27,7 @@
     "@types/node": "^22",
     "@types/supertest": "^6.0.2",
     "@types/tar": "^7.0.87",
-    "@vitest/coverage-v8": "^5.0.4",
+    "@vitest/coverage-v8": "^5.0.5",
     "aws-cdk": "^2.1146.1",
     "aws-sdk-client-mock": "^4.1.0",
     "aws-sdk-client-mock-vitest": "^7.0.1",
