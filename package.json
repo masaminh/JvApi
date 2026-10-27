@@ -32,7 +32,7 @@
     "aws-sdk-client-mock": "^4.1.0",
     "aws-sdk-client-mock-vitest": "^7.0.1",
     "esbuild": "^0.28.1",
-    "eslint": "^9.39.5",
+    "eslint": "^10.13.0",
     "eslint-config-flat-gitignore": "^2.4.0",
     "neostandard": "^0.14.1",
     "supertest": "^7.1.0",
