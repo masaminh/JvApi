@@ -28,9 +28,9 @@ describe('get_jv_data', () => {
     const untarMock = vitest.spyOn(tar, 'x')
       .mockImplementation((options) => {
         const func = options.filter
-        func?.('properties', { size: 100 } as tar.FileStat)
-        func?.('data', { size: 100 } as tar.FileStat)
-        return untarStream
+        func?.('properties', { size: 100 } as tar.ReadEntry)
+        func?.('data', { size: 100 } as tar.ReadEntry)
+        return untarStream as unknown as tar.Unpack
       })
     const readFileStringMock = vitest.spyOn(FsWrapper, 'readFileString')
       .mockResolvedValue('{"JvlinkVersion":"1234"}')
@@ -66,9 +66,9 @@ describe('get_jv_data', () => {
     vitest.spyOn(tar, 'x')
       .mockImplementation((options) => {
         const func = options.filter
-        func?.('properties', { size: 100 } as tar.FileStat)
-        func?.('data', { size: 100 } as tar.FileStat)
-        return untarStream
+        func?.('properties', { size: 100 } as tar.ReadEntry)
+        func?.('data', { size: 100 } as tar.ReadEntry)
+        return untarStream as unknown as tar.Unpack
       })
     vitest.spyOn(FsWrapper, 'readFileString')
       .mockResolvedValue('{"badformat":"1234"}')
@@ -86,10 +86,10 @@ describe('get_jv_data', () => {
     vitest.spyOn(tar, 'x')
       .mockImplementation((options) => {
         const func = options.filter
-        func?.('properties', { size: 100 } as tar.FileStat)
-        func?.('data', { size: 100 } as tar.FileStat)
-        func?.('unknown', { size: 100 } as tar.FileStat)
-        return untarStream
+        func?.('properties', { size: 100 } as tar.ReadEntry)
+        func?.('data', { size: 100 } as tar.ReadEntry)
+        func?.('unknown', { size: 100 } as tar.ReadEntry)
+        return untarStream as unknown as tar.Unpack
       })
     await expect(() => getJvData('BUCKET', 'KEY')).rejects.toThrow()
   })
@@ -105,9 +105,9 @@ describe('get_jv_data', () => {
     vitest.spyOn(tar, 'x')
       .mockImplementation((options) => {
         const func = options.filter
-        func?.('properties', { size: 100 } as tar.FileStat)
-        func?.('data', { size: 1 * 1000 * 1000 - 99 } as tar.FileStat)
-        return untarStream
+        func?.('properties', { size: 100 } as tar.ReadEntry)
+        func?.('data', { size: 1 * 1000 * 1000 - 99 } as tar.ReadEntry)
+        return untarStream as unknown as tar.Unpack
       })
     await expect(() => getJvData('BUCKET', 'KEY')).rejects.toThrow()
   })
