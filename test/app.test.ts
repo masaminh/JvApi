@@ -120,6 +120,14 @@ describe('app', () => {
     expect(getRaceMock).toHaveBeenCalledTimes(0)
   })
 
+  it('race: not found', async () => {
+    const getRaceMock = vitest.spyOn(getRace, 'default')
+      .mockResolvedValue(undefined)
+    const response = await request(app).get('/races/2024010101010101')
+    expect(response.status).toBe(404)
+    expect(getRaceMock).toHaveBeenCalledWith('2024010101010101')
+  })
+
   it('404', async () => {
     const response = await request(app).get('/noapi')
     expect(response.status).toBe(404)

@@ -50,6 +50,12 @@ app.get('/races/:raceid', asyncWrapper(async (req, res) => {
   }
 
   const race = await getRace(raceid)
+
+  if (race === undefined) {
+    res.sendStatus(404)
+    return
+  }
+
   res.json(race)
 }))
 
