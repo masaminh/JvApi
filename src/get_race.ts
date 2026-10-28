@@ -86,9 +86,21 @@ async function getRaceInfoTk (
   bucket: string,
   racePrefix: string,
   raceId: string
-): Promise<RaceInfo> {
+): Promise<RaceInfo | undefined> {
   const tkKey = `${racePrefix}TK${raceId}.tar.gz`
-  const tokuData = await getJvData(bucket, tkKey)
+
+  let tokuData: JvData
+
+  try {
+    tokuData = await getJvData(bucket, tkKey)
+  } catch (e) {
+    if (e instanceof NoSuchKey) {
+      return undefined
+    }
+
+    throw e
+  }
+
   const tkData = getTkData(tokuData)
   return {
     raceId,
@@ -136,7 +148,7 @@ type ReturnType = {
   }[]
 }
 
-export default async function getRace (raceId: string): Promise<ReturnType> {
+export default async function getRace (raceId: string): Promise<ReturnType | undefined> {
   if (raceId.length !== 16) {
     throw new Error('raceId.length must be 16')
   }
@@ -151,6 +163,10 @@ export default async function getRace (raceId: string): Promise<ReturnType> {
 
   const raceInfo = await getRaceInfoRa(bucket, racePrefix, raceId) ??
     await getRaceInfoTk(bucket, racePrefix, raceId)
+
+  if (raceInfo === undefined) {
+    return undefined
+  }
 
   return {
     raceId,

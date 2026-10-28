@@ -201,7 +201,7 @@ describe('getRace', () => {
       })
 
     const result = await getRace('2023121601010101')
-    expect(result.raceName).toBe('レース名')
+    expect(result?.raceName).toBe('レース名')
   })
 
   it('getRace: レース名あり、グレードあり', async () => {
@@ -222,7 +222,7 @@ describe('getRace', () => {
       })
 
     const result = await getRace('2023121601010101')
-    expect(result.raceName).toBe('レース名(グレード)')
+    expect(result?.raceName).toBe('レース名(グレード)')
   })
 
   it('getRace: レース名の「ステークス」を「S」に変換', async () => {
@@ -243,7 +243,7 @@ describe('getRace', () => {
       })
 
     const result = await getRace('2023121601010101')
-    expect(result.raceName).toBe('なんとかS(グレード)')
+    expect(result?.raceName).toBe('なんとかS(グレード)')
   })
 
   it('getRace: Bad raceId length', async () => {
@@ -252,6 +252,27 @@ describe('getRace', () => {
 
   it('getRace: Bad raceId date', async () => {
     await expect(() => getRace('2023123201010101')).rejects.toThrow()
+  })
+
+  it('getRace: RA も TK も存在しない', async () => {
+    const getJvDataMock = vitest.spyOn(getJvData, 'default')
+      .mockRejectedValueOnce(new NoSuchKey({ $metadata: {}, message: '' }))
+      .mockRejectedValueOnce(new NoSuchKey({ $metadata: {}, message: '' }))
+
+    const result = await getRace('2023121601010101')
+    expect(getJvDataMock).toHaveBeenNthCalledWith(
+      2,
+      'JVDATA_BUCKET',
+      'JVDATA_PREFIX/RACE/2023/12/16/2023121601010101/TK2023121601010101.tar.gz'
+    )
+    expect(result).toBeUndefined()
+  })
+
+  it('getRace: TK の getJvData で NoSuchKey 以外のエラー', async () => {
+    vitest.spyOn(getJvData, 'default')
+      .mockRejectedValueOnce(new NoSuchKey({ $metadata: {}, message: '' }))
+      .mockRejectedValueOnce(new Error('getJvData error'))
+    await expect(() => getRace('2023121601010101')).rejects.toThrow('getJvData error')
   })
 
   it('getRace: getJvData occured Error', async () => {
