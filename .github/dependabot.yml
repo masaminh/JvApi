@@ -14,6 +14,11 @@ updates:
       semver-major-days: 7
       semver-minor-days: 1
       semver-patch-days: 1
+    # @types/node は Lambda ランタイム（nodejs24.x）のメジャーに合わせるため、
+    # メジャー更新はランタイム更新と一緒に手動で行う
+    ignore:
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       aws-cdk:
         patterns:
