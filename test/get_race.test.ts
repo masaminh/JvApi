@@ -57,12 +57,13 @@ describe('getRace', () => {
     expect(result).toEqual<typeof result>({
       raceId: '2023121601010101',
       date: '2023-12-16',
+      time: undefined,
       place: '札幌',
       raceNumber: 1,
       raceName: '未勝利',
       horses: [
-        { horseNumber: undefined, horseId: 'HORSEID_1', horseName: 'HORSENAME_1' },
-        { horseNumber: undefined, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' },
+        { horseNumber: undefined, horseId: 'HORSEID_1', horseName: 'HORSENAME_1', order: undefined },
+        { horseNumber: undefined, horseId: 'HORSEID_2', horseName: 'HORSENAME_2', order: undefined },
       ],
     })
   })
@@ -81,14 +82,15 @@ describe('getRace', () => {
     vitest.spyOn(getRaData, 'default')
       .mockReturnValueOnce({
         date: DateTime.fromISO('20231216'),
+        time: '10:05',
         place: '札幌',
         raceNumber: 1,
         raceName: '',
         raceGrade: '未勝利',
       })
     vitest.spyOn(getSeData, 'default')
-      .mockReturnValueOnce({ horseNumber: undefined, horseId: 'HORSEID_1', horseName: 'HORSENAME_1' })
-      .mockReturnValueOnce({ horseNumber: undefined, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' })
+      .mockReturnValueOnce({ horseNumber: undefined, horseId: 'HORSEID_1', horseName: 'HORSENAME_1', order: undefined })
+      .mockReturnValueOnce({ horseNumber: undefined, horseId: 'HORSEID_2', horseName: 'HORSENAME_2', order: undefined })
 
     const result = await getRace('2023121601010101')
     expect(listObjectsMock).toHaveBeenNthCalledWith(
@@ -114,12 +116,13 @@ describe('getRace', () => {
     expect(result).toEqual<typeof result>({
       raceId: '2023121601010101',
       date: '2023-12-16',
+      time: '10:05',
       place: '札幌',
       raceNumber: 1,
       raceName: '未勝利',
       horses: [
-        { horseNumber: undefined, horseId: 'HORSEID_1', horseName: 'HORSENAME_1' },
-        { horseNumber: undefined, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' },
+        { horseNumber: undefined, horseId: 'HORSEID_1', horseName: 'HORSENAME_1', order: undefined },
+        { horseNumber: undefined, horseId: 'HORSEID_2', horseName: 'HORSENAME_2', order: undefined },
       ],
     })
   })
@@ -140,14 +143,15 @@ describe('getRace', () => {
     vitest.spyOn(getRaData, 'default')
       .mockReturnValueOnce({
         date: DateTime.fromISO('20231216'),
+        time: '10:05',
         place: '札幌',
         raceNumber: 1,
         raceName: '',
         raceGrade: '未勝利',
       })
     vitest.spyOn(getSeData, 'default')
-      .mockReturnValueOnce({ horseNumber: 1, horseId: 'HORSEID_1', horseName: 'HORSENAME_1' })
-      .mockReturnValueOnce({ horseNumber: 2, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' })
+      .mockReturnValueOnce({ horseNumber: 1, horseId: 'HORSEID_1', horseName: 'HORSENAME_1', order: 1 })
+      .mockReturnValueOnce({ horseNumber: 2, horseId: 'HORSEID_2', horseName: 'HORSENAME_2', order: 2 })
 
     const result = await getRace('2023121601010101')
     expect(listObjectsMock).toHaveBeenNthCalledWith(
@@ -173,12 +177,13 @@ describe('getRace', () => {
     expect(result).toEqual<typeof result>({
       raceId: '2023121601010101',
       date: '2023-12-16',
+      time: '10:05',
       place: '札幌',
       raceNumber: 1,
       raceName: '未勝利',
       horses: [
-        { horseNumber: 1, horseId: 'HORSEID_1', horseName: 'HORSENAME_1' },
-        { horseNumber: 2, horseId: 'HORSEID_2', horseName: 'HORSENAME_2' },
+        { horseNumber: 1, horseId: 'HORSEID_1', horseName: 'HORSENAME_1', order: 1 },
+        { horseNumber: 2, horseId: 'HORSEID_2', horseName: 'HORSENAME_2', order: 2 },
       ],
     })
   })

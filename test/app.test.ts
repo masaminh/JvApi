@@ -60,8 +60,8 @@ describe('app', () => {
         raceNumber: 1,
         raceName: '未勝利',
         horses: [
-          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1' },
-          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2' },
+          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1', order: 1 },
+          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2', order: 2 },
         ],
       })
     const response = await request(app).get('/races/2024010101010101')
@@ -74,8 +74,8 @@ describe('app', () => {
       raceNumber: 1,
       raceName: '未勝利',
       horses: [
-        { horseNumber: 1, horseId: '1234567890', horseName: '馬名1' },
-        { horseNumber: 2, horseId: '2345678901', horseName: '馬名2' },
+        { horseNumber: 1, horseId: '1234567890', horseName: '馬名1', order: 1 },
+        { horseNumber: 2, horseId: '2345678901', horseName: '馬名2', order: 2 },
       ],
     })
     expect(getRaceMock).toHaveBeenCalledTimes(1)
@@ -92,8 +92,8 @@ describe('app', () => {
         raceNumber: 1,
         raceName: '未勝利',
         horses: [
-          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1' },
-          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2' },
+          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1', order: 1 },
+          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2', order: 2 },
         ],
       })
     const response = await request(app).get('/races/202401010101010')
@@ -111,8 +111,8 @@ describe('app', () => {
         raceNumber: 1,
         raceName: '未勝利',
         horses: [
-          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1' },
-          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2' },
+          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1', order: 1 },
+          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2', order: 2 },
         ],
       })
     const response = await request(app).get('/races/2024013201010101')
@@ -157,8 +157,8 @@ describe('app', () => {
         raceNumber: 1,
         raceName: '未勝利',
         horses: [
-          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1' },
-          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2' },
+          { horseNumber: 1, horseId: '1234567890', horseName: '馬名1', order: 1 },
+          { horseNumber: 2, horseId: '2345678901', horseName: '馬名2', order: 2 },
         ],
       })
     const response = await request(app).get('/races/2024010101010101')
