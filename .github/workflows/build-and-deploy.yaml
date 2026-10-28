@@ -33,6 +33,10 @@ jobs:
           CDK_CONTEXT_URI: ${{ secrets.CDK_CONTEXT_URI }}
         run: |
           aws s3 cp "$CDK_CONTEXT_URI" cdk.context.json
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npm run typecheck
       - name: Test
         run: npm run test
       - name: SonarCloud Scan
