@@ -20,7 +20,7 @@
     "@smithy/types": "3.3.0"
   },
   "devDependencies": {
-    "@humanfs/node": "^0.16.8",
+    "@humanfs/node": "^0.17.0",
     "@smithy/util-stream": "^4.8.2",
     "@tsconfig/node24": "^24.0.5",
     "@types/aws-lambda": "^8.10.164",
