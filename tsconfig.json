@@ -1,7 +1,15 @@
 {
   "extends": "@tsconfig/node24/tsconfig.json",
   "compilerOptions": {
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "types": ["vitest/globals"]
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "nodenext",
+      "moduleResolution": "nodenext"
+    }
   },
   "exclude": [
     "node_modules",
